@@ -1,19 +1,15 @@
 const { MongoClient } = require("mongodb");
 
-const url = "mongodb://localhost:27017/goodAlbums";
-let dbCollection;
+const connectionString = "mongodb://localhost:27017/goodAlbums";
 
-module.exports = {
-    connectToDb: (callback) => {
-        MongoClient.connect(url)
-            .then((client) => {
-                dbCollection = client.db();
-                return callback();
-            })
-            .catch((err) => {
-                console.error(err);
-                return callback(err);
-            });
-    },
-    getDb: () => dbCollection,
-};
+const db = MongoClient.connect(connectionString)
+.then((client)=>{
+    console.log("mongo connected");
+    return client.db();
+})
+.catch((err) =>  {
+    console.error(err);
+});
+
+module.exports = db;
+
